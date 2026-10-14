@@ -1,0 +1,118 @@
+{
+  "schema": "kakacat_case_validation_v1",
+  "game_index": 24,
+  "title": "聖娼女 ～性奴育成学园～",
+  "engine": "SiglusEngine",
+  "repair_version": "R2",
+  "status": "user_confirmed_reported_checks_pass",
+  "case_record_only": true,
+  "cli_profile": null,
+  "acceptance": {
+    "date": "2026-10-15",
+    "timezone": "Asia/Shanghai",
+    "source": "direct_user_feedback",
+    "platform": "iOS Kakacat",
+    "checks": {
+      "enter_game": "pass",
+      "body_text": "pass",
+      "transitions": "pass",
+      "save_and_load": "pass",
+      "load_after_exit_and_reopen": "pass"
+    },
+    "maintainer_direct_device_observation": false,
+    "all_routes_or_devices_validated": false
+  },
+  "r1": {
+    "change": "Add key.toml while retaining original resources",
+    "file_validation": "pass",
+    "user_device_result": "secat.no_key190 remains"
+  },
+  "r2": {
+    "change": "Remove extra16 XOR; retain public256 XOR, LZSS, and content",
+    "scene_count": 190,
+    "scene_extra_xor_flag": {
+      "offset": 84,
+      "type": "little-endian uint32",
+      "before": 1,
+      "after": 0
+    },
+    "gameexe_extra_xor_flag": {
+      "offset": 4,
+      "type": "little-endian uint32",
+      "before": 1,
+      "after": 0
+    },
+    "scene_xor_cycle_resets_per_block": true,
+    "gameexe_xor_payload_offset": 8,
+    "source_roundtrip_byte_exact": true
+  },
+  "fingerprints": [
+    {
+      "file": "Scene.pck",
+      "version": "source",
+      "bytes": 13607939,
+      "sha256": "60affba5f824237947fdf4cbba2521f5c969095ad1b13908926f086539d196d0"
+    },
+    {
+      "file": "Scene.pck",
+      "version": "R2",
+      "bytes": 13607939,
+      "sha256": "4e75f803a231db9be66e7b084dbd779946afdd2193399e7f2526138ac7e36cd2"
+    },
+    {
+      "file": "Gameexe.dat",
+      "version": "source",
+      "bytes": 13492,
+      "sha256": "6f980594e8beb8c3f1ee489ca62ff1c00b7f86bc9149382d0989c61248de3460"
+    },
+    {
+      "file": "Gameexe.dat",
+      "version": "R2",
+      "bytes": 13492,
+      "sha256": "8fd6b1cff8b3309ce4c8c983c514602b1ed41443f2d513d8bc8ea638d7635513"
+    }
+  ],
+  "package": {
+    "filename": "24_聖娼女 ～性奴育成学园～_去额外加密_R2.zip",
+    "runtime_root": "G24_Kaka_R2_20261014",
+    "bytes": 3393274997,
+    "sha256": "dd42e419da3e9de4ce31d3fc54ade74af20fc216789032114d74fa706eb7404b",
+    "file_count": 2301,
+    "unchanged_runtime_assets": 2298,
+    "compression": "ZIP_STORED",
+    "encrypted": false,
+    "utf8_names": true,
+    "windows_executable_entries": false,
+    "user_saves_included": false
+  },
+  "file_validation": {
+    "prior_source_strict_decode": {
+      "scene_count": 190,
+      "scene_decoded_bytes": 29567657,
+      "gameexe_decoded_bytes": 69544,
+      "gameexe_decoded_sha256": "bc7d46b1c6cecd37c0d32605344bdbc26ef7e167eba1f65ec2ab9a138e9f41e8"
+    },
+    "prior_r2_complete_package_checks": {
+      "all_member_sha_crc_readback": "pass",
+      "unchanged_runtime_asset_crc_count": 2298,
+      "seven_zip_version": "26.01",
+      "seven_zip_exit_code": 0
+    },
+    "independent_local_audit_20261015": {
+      "central_directory_all_members": "pass",
+      "content_members_read": [
+        "Scene.pck",
+        "Gameexe.dat",
+        "PACKAGE_VERSION_R2.txt"
+      ],
+      "sha_crc_and_flags": "pass",
+      "scene_block_count": 190,
+      "source_fingerprints": "match",
+      "whole_archive_sha_recomputed": false,
+      "complete_seven_zip_repeated": false,
+      "new_r2_strict_decode_performed": false
+    }
+  },
+  "source_and_previous_packages_and_saves_preserved": true,
+  "published_materials": "case documentation and numeric/hash metadata only; no game assets, complete resource inventory, saves, raw conversation, or model logs"
+}
