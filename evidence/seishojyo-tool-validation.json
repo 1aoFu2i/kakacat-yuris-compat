@@ -1,0 +1,86 @@
+{
+  "schema": "kakacat_tool_validation_v1",
+  "date": "2026-10-15",
+  "timezone": "Asia/Shanghai",
+  "tool_version": "0.2.0",
+  "profile": "seishojyo-r2",
+  "engine": "SiglusEngine",
+  "python_version": "3.12.10",
+  "zlib_version": "1.3.1",
+  "source_version_matching": "core SHA256/size plus complete media path/size/SHA256 aggregate",
+  "media_inventory_sha256": "0e38ecac9573f07c0aca5f8c283be9b70faf407176c6b7e3bcfbca8ae5f6353f",
+  "actual_supported_source_build": {
+    "status": "pass",
+    "members": 2301,
+    "all_member_paths_sizes_sha256_match_accepted_r2": true,
+    "source_runtime_files_unchanged": true,
+    "source_save_file_count_checked": 7,
+    "source_save_hashes_sizes_mtimes_unchanged": true,
+    "xor_reversal_exact": true,
+    "zip": {
+      "filename": "seishojyo-r2.zip",
+      "bytes": 3054931911,
+      "sha256": "4c8f91edd620c4e8abe827e9dbfb94e79484f7f33ddb7526fadd5a6e1842396c",
+      "compression": "DEFLATE",
+      "member_crc_sha256_readback": "PASS",
+      "utf8": true,
+      "zip64_local_headers": "PASS",
+      "encrypted": false
+    },
+    "new_build_ios_status": "NOT_TESTED_BY_THIS_BUILD"
+  },
+  "installed_tool_smoke": {
+    "package_install": "PASS",
+    "module_version": "0.2.0",
+    "profile_import": "PASS",
+    "independent_verify": "PASS",
+    "verify_ios_status": "NOT_TESTED_BY_THIS_VERIFICATION"
+  },
+  "independent_native_archive_test": {
+    "program": "7-Zip",
+    "version": "26.01",
+    "exit_code": 0,
+    "members": 2301,
+    "result": "Everything is Ok"
+  },
+  "synthetic_tests": [
+    {
+      "mode": "normal",
+      "tests": 55,
+      "passed": 53,
+      "skipped": [
+        {
+          "test": "test_build_refuses_dangling_output_symlink",
+          "reason": "Local symbolic links unavailable: OSError"
+        },
+        {
+          "test": "test_inspect_refuses_runtime_file_symlink",
+          "reason": "Local symbolic links unavailable: OSError"
+        }
+      ],
+      "exit_code": 0
+    },
+    {
+      "mode": "optimized",
+      "tests": 55,
+      "passed": 53,
+      "skipped": [
+        {
+          "test": "test_build_refuses_dangling_output_symlink",
+          "reason": "Local symbolic links unavailable: OSError"
+        },
+        {
+          "test": "test_inspect_refuses_runtime_file_symlink",
+          "reason": "Local symbolic links unavailable: OSError"
+        }
+      ],
+      "exit_code": 0
+    }
+  ],
+  "windows_native_junction_rejection_test": "PASS",
+  "historical_user_ios_acceptance_preserved": true,
+  "historical_acceptance_record": "seishojyo-r2-validation.json",
+  "actual_extra_xor_parameter_published_or_logged": false,
+  "game_executables_executed": false,
+  "published_scope": "tool code, neutral synthetic fixtures and aggregate/numeric validation metadata only"
+}

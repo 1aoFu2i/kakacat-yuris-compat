@@ -2,7 +2,9 @@
 from __future__ import annotations
 import hashlib
 import json
+import os
 import shutil
+import stat
 import struct
 import zipfile
 from pathlib import Path
@@ -25,17 +27,28 @@ def write_json(path, value):
         json.dump(value, stream, ensure_ascii=False, indent=2)
         stream.write("\n")
 
+
+def is_reparse(path):
+    """Detect symlinks and Windows junction/reparse entries without following them."""
+    entry = Path(path).lstat()
+    return stat.S_ISLNK(entry.st_mode) or bool(getattr(entry, "st_file_attributes", 0) & 0x400)
+
 def inventory(game_dir):
+    game_dir = Path(game_dir)
+    require(not is_reparse(game_dir) and game_dir.is_dir(), "Output root must be a regular directory")
     records = []
-    for path in sorted(Path(game_dir).rglob("*")):
-        require(not path.is_symlink(), "Output contains a symbolic link")
-        if path.is_file():
+    for parent, directories, files in os.walk(game_dir, followlinks=False):
+        for name in directories:
+            require(not is_reparse(Path(parent) / name), "Output contains a link or reparse directory")
+        for name in files:
+            path = Path(parent) / name
+            require(not is_reparse(path) and path.is_file(), "Output contains a non-regular file")
             relative = path.relative_to(game_dir).as_posix()
             require(path.suffix.lower() != ".exe", "Executable in resource package")
             records.append({"path": relative, "size": path.stat().st_size,
                             "sha256": file_hash(path)})
     require(bool(records), "Empty resource package")
-    return records
+    return sorted(records, key=lambda row: row["path"])
 
 class Utf8ZipInfo(zipfile.ZipInfo):
     def _encodeFilenameFlags(self):

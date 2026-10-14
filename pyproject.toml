@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "kakacat-yuris-compat"
-version = "0.1.0"
-description = "咔咔喵（KrkrCat）YU-RIS 游戏兼容适配流程与工具"
+version = "0.2.0"
+description = "咔咔喵（KrkrCat）YU-RIS / Siglus 游戏兼容适配流程与工具"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 license = "GPL-3.0-only"

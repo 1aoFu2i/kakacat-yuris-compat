@@ -2,7 +2,7 @@
 
 本案例为逐款任务 G24，针对已核对指纹的 SiglusEngine 源版本。最终“去额外加密 R2”于 **2026-10-15 获用户 iOS 咔咔喵验收**：能够进入游戏，正文、转场和存读档正常，退出重开后读档也正常。
 
-这是 SiglusEngine 案例记录。当前仓库的 `kakacat_yuris` CLI 仍处理其列出的 YU-RIS profiles，没有 G24 的构建 profile；不要将 YBN/YPF 或其他标题的补丁用于本款。
+本案例的重建流程自工具 0.2.0 起提供 `seishojyo-r2` profile，处理匹配的 SiglusEngine 原版本；不要将 YBN/YPF 或其他标题的补丁用于本款。以下历史 R2 修复与手机反馈保持独立记录，新构建的文件验证另见文末。
 
 ## 问题与修复版本
 
@@ -62,3 +62,21 @@ R2 在资源中实际移除了额外的 16 字节周期 XOR 层，保留公有 2
 若使用者自行对匹配源版本重新构建，应在独立目录和新游戏条目中验证，保留原文件与旧存档。先确认进入游戏，再检查正文、普通转场、存档/读档以及退出重开后的读档。新构建产生新的文件级记录，不能自动继承本次手机结果；出现问题时提供源指纹、实际使用包、完整错误文本和触发阶段。
 
 更多证据边界与公开材料范围见 [验证与复现说明](verification.md)。
+
+## 工具 0.2.0：从匹配原目录重建
+
+```powershell
+python -m kakacat_yuris inspect --profile seishojyo-r2 --source "D:\Games\seishojyo"
+python -m kakacat_yuris build --profile seishojyo-r2 --source "D:\Games\seishojyo" --output "D:\KakacatOutput\seishojyo-r2"
+python -m kakacat_yuris verify --output "D:\KakacatOutput\seishojyo-r2"
+```
+
+输入必须包含匹配的原 `Scene.pck`、`Gameexe.dat` 和七个运行目录。除上述两份核心指纹外，工具还检查 2,298 份媒体的路径、大小和内容 SHA256 聚合指纹：`0e38ecac9573f07c0aca5f8c283be9b70faf407176c6b7e3bcfbca8ae5f6353f`。聚合算法是媒体行仅保留 `path/size/sha256`、按 `path` 排序，以 ASCII JSON（键排序、紧凑分隔符）编码后取 SHA256。
+
+工具在匹配配置文件中恢复转换参数，只在本机内存使用，再用固定 R2 哈希验证唯一结果。构建不执行或读取原 EXE/DLL，也不需要既有修复包。媒体原样复制；`wav` 保留该版本的 305 份 NWA 和 12 份 Ogg，其他目录也按已核对集合检查。源根目录中的存档、补丁和备份不会复制到新包。
+
+每个新文件独立创建并读回，两个 XOR 转换都验证反向还原。构建前、准备后及 ZIP 完整读回后均复核源核心与完整媒体集合；修改内容、增删资源或转换成已修复版本都会拒绝。输出不能存在、不能与源目录相互包含；目录链接、junction/reparse 会在遍历前拒绝。空间检查为 stage 与 ZIP 预留两份数据及余量。
+
+`verify` 既核对本次 manifest/stage/ZIP，也重新检查本 profile 的固定 R2 核心、CRLF 版本标记和媒体指纹。同步篡改 manifest 与 ZIP 不能使错误资源通过 G24 验证。
+
+新 ZIP 使用现有 UTF-8 / ZIP64 / DEFLATE 打包器，整体哈希不要求重现旧 STORE ZIP；全部成员的路径、大小和内容哈希必须与已验收 R2 相同。构建报告保持 `NOT_TESTED_BY_THIS_BUILD`，复验报告保持 `NOT_TESTED_BY_THIS_VERIFICATION`。原有 [手机成功反馈摘要](../evidence/seishojyo-r2-validation.json) 保持原样，新的 [工具构建验证摘要](../evidence/seishojyo-tool-validation.json) 单独保存。

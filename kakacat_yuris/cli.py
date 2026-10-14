@@ -4,23 +4,29 @@ import argparse
 from datetime import datetime, timezone
 import importlib
 import json
+import os
 from pathlib import Path
 import sys
 import zlib
 from . import __version__
-from .common import require, write_json, file_hash, inventory, package, verify_zip
+from .common import require, write_json, file_hash, inventory, package, verify_zip, is_reparse
 
-PROFILES = ("euphoria-r1", "euphoria-r2", "euphoria-alt-r2", "maggot-r1")
+PROFILES = ("euphoria-r1", "euphoria-r2", "euphoria-alt-r2", "maggot-r1", "seishojyo-r2")
 
 def module_for(profile):
-    name = "maggot" if profile == "maggot-r1" else "euphoria"
+    require(profile in PROFILES, "Unknown profile")
+    name = "siglus" if profile == "seishojyo-r2" else "maggot" if profile == "maggot-r1" else "euphoria"
     return importlib.import_module("." + name, __package__)
 
 def emit(value):
     print(json.dumps(value, ensure_ascii=False, indent=2), flush=True)
 
 def build(profile, source, output):
-    source, output = Path(source).resolve(), Path(output).resolve()
+    source, output = Path(source), Path(output)
+    require(not os.path.lexists(output), "Refusing to overwrite existing output")
+    if profile == "seishojyo-r2":
+        require(not is_reparse(source), "Source root must not be a link or reparse entry")
+    source, output = source.resolve(), output.resolve()
     require(source.is_dir(), "Source must be an extracted game directory")
     require(not output.exists(), "Refusing to overwrite existing output")
     require(not output.is_relative_to(source) and not source.is_relative_to(output),
@@ -38,6 +44,8 @@ def build(profile, source, output):
         require(game_dir.parent == stage and game_dir.is_dir(), "Invalid stage root")
         emit({"phase": "inventory", "profile": profile})
         rows = inventory(game_dir)
+        if profile == "seishojyo-r2":
+            engine.validate_output_inventory(rows)
         partial = output / (profile + ".zip.partial")
         emit({"phase": "package", "profile": profile, "members": len(rows)})
         package(game_dir, partial, rows)
@@ -72,11 +80,14 @@ def verify(output):
     manifest = json.loads((output / "manifest.json").read_text("utf-8"))
     profile = manifest["profile"]
     require(profile in PROFILES, "Unknown manifest profile")
-    game_name = "maggotbaits" if profile == "maggot-r1" else "euphoriaHD"
+    game_name = "G24_Kaka_R2_20261014" if profile == "seishojyo-r2" else "maggotbaits" if profile == "maggot-r1" else "euphoriaHD"
     require(manifest["game_directory"] == game_name, "Unexpected game directory")
     require(manifest["zip_filename"] == profile + ".zip", "Unexpected ZIP filename")
     game_dir = output / "stage" / game_name
-    require(inventory(game_dir) == manifest["files"], "Stage files changed")
+    rows = inventory(game_dir)
+    require(rows == manifest["files"], "Stage files changed")
+    if profile == "seishojyo-r2":
+        module_for(profile).validate_output_inventory(rows)
     zipped = output / manifest["zip_filename"]
     require(zipped.stat().st_size == manifest["zip_size"], "ZIP size changed")
     require(file_hash(zipped) == manifest["zip_sha256"], "ZIP file hash changed")
@@ -87,7 +98,7 @@ def verify(output):
     return result
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description="咔咔喵（KrkrCat）YU-RIS 游戏兼容适配；离线、已知版本限定")
+    parser = argparse.ArgumentParser(description="咔咔喵（KrkrCat）YU-RIS / Siglus 游戏兼容适配；离线、已知版本限定")
     parser.add_argument("--version", action="version", version=__version__)
     commands = parser.add_subparsers(dest="command", required=True)
     for name in ("inspect", "build"):
@@ -101,7 +112,8 @@ def main(argv=None):
     args = parser.parse_args(argv)
     try:
         if args.command == "inspect":
-            emit(module_for(args.profile).inspect(args.source.resolve(), args.profile))
+            source = args.source if args.profile == "seishojyo-r2" else args.source.resolve()
+            emit(module_for(args.profile).inspect(source, args.profile))
         elif args.command == "build":
             build(args.profile, args.source, args.output)
         else:
