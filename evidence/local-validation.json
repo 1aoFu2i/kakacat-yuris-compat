@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "validated_on": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "target_runtime": "咔咔喵（KrkrCat）",
+  "tool_version": "0.1.0",
+  "status": "PASS_ALL_FOUR_LOCAL_FILE_PIPELINES",
+  "synthetic_tests": {
+    "framework": "unittest",
+    "passed": 17,
+    "failed": 0
+  },
+  "full_pipeline_runs": [
+    {
+      "profile": "euphoria-r1",
+      "status": "PASS_LOCAL_FULL_PIPELINE",
+      "file_count": 39,
+      "python_version": "3.12.10",
+      "zlib_version": "1.3.1",
+      "source_unchanged": true,
+      "historical_all_member_hashes": "PASS",
+      "independent_bn": "PASS",
+      "seven_zip": "PASS",
+      "zip_readback": {
+        "status": "PASS",
+        "members": 39,
+        "crc_readback": "PASS",
+        "sha256_readback": "PASS",
+        "utf8": true,
+        "zip64_enabled": true,
+        "password": false,
+        "exe_files": 0,
+        "zip64_local_headers": "PASS"
+      },
+      "zip_sha256": "c57cd9cb6285be05c270b0cec72584582abc40599377456c79224a590d7a1a6b",
+      "ios_status": "NOT_TESTED_BY_THIS_BUILD",
+      "original_source_basis": "historical preserved source bytes",
+      "tool_installation": "repository_source"
+    },
+    {
+      "profile": "euphoria-r2",
+      "status": "PASS_LOCAL_FULL_PIPELINE",
+      "file_count": 39,
+      "python_version": "3.12.10",
+      "zlib_version": "1.3.1",
+      "source_unchanged": true,
+      "tool_installation": "repository_source",
+      "historical_all_member_hashes": "PASS",
+      "independent_bn": "PASS",
+      "seven_zip": "PASS",
+      "zip_readback": {
+        "status": "PASS",
+        "members": 39,
+        "crc_readback": "PASS",
+        "sha256_readback": "PASS",
+        "utf8": true,
+        "zip64_enabled": true,
+        "zip64_local_headers": "PASS",
+        "password": false,
+        "exe_files": 0
+      },
+      "zip_sha256": "db959cc48ea45c02c3e7ec0168acf12212e7ac3f00fde137a713335c32131fb0",
+      "ios_status": "NOT_TESTED_BY_THIS_BUILD",
+      "original_source_basis": "historical preserved source bytes"
+    },
+    {
+      "profile": "euphoria-alt-r2",
+      "status": "PASS_LOCAL_FULL_PIPELINE",
+      "file_count": 43,
+      "python_version": "3.12.10",
+      "zlib_version": "1.3.1",
+      "source_unchanged": true,
+      "tool_installation": "installed_distribution",
+      "historical_all_member_hashes": "PASS",
+      "independent_bn": "PASS",
+      "seven_zip": "PASS",
+      "zip_readback": {
+        "status": "PASS",
+        "members": 43,
+        "crc_readback": "PASS",
+        "sha256_readback": "PASS",
+        "utf8": true,
+        "zip64_enabled": true,
+        "zip64_local_headers": "PASS",
+        "password": false,
+        "exe_files": 0
+      },
+      "zip_sha256": "b26483f21b4c213c2e1e2451165b2cbbc74c4f1b89e372927dd6d4ba9b55aef5",
+      "ios_status": "NOT_TESTED_BY_THIS_BUILD",
+      "original_source_basis": "current alternate source"
+    },
+    {
+      "profile": "maggot-r1",
+      "status": "PASS_LOCAL_FULL_PIPELINE",
+      "file_count": 1425,
+      "python_version": "3.12.10",
+      "zlib_version": "1.3.1",
+      "source_unchanged": true,
+      "tool_installation": "installed_distribution",
+      "historical_all_member_hashes": "PASS",
+      "independent_bn": "PASS",
+      "seven_zip": "PASS",
+      "zip_readback": {
+        "status": "PASS",
+        "members": 1425,
+        "crc_readback": "PASS",
+        "sha256_readback": "PASS",
+        "utf8": true,
+        "zip64_enabled": true,
+        "zip64_local_headers": "PASS",
+        "password": false,
+        "exe_files": 0
+      },
+      "zip_sha256": "b1dcb1182a2c196000660d505fed4c479ebd9e4f3c4a18c74c272d2d45a28a54",
+      "ios_status": "NOT_TESTED_BY_THIS_BUILD"
+    }
+  ],
+  "additional_runtime_check": {
+    "python_version": "3.12.14",
+    "zlib_version": "1.3.2",
+    "status": "PASS_BN_PIPELINE_ONLY",
+    "full_zip_tested": false,
+    "stages": [
+      {
+        "stage": "v2",
+        "size": 6979368,
+        "sha256": "0489766718cae3dfc916d49fe47f083d378c97c8022a897a72514ebcccfd3e0d"
+      },
+      {
+        "stage": "v3",
+        "size": 6982652,
+        "sha256": "2703c48f119d951c41e5513cf5e86c8bce55497bba05c04ba86a094cc8b89576"
+      },
+      {
+        "stage": "v4",
+        "size": 7003999,
+        "sha256": "e0cd912d2ee404670f6aee62590685306f5c846f688aa720fcee4c59a87ed28d"
+      },
+      {
+        "stage": "r1",
+        "size": 7093096,
+        "sha256": "4b8b4e4a45ff068fc45c498f9e9cceb02942ba6a0cc1fabbe27cc9585f4de5a3"
+      }
+    ]
+  },
+  "distribution": {
+    "wheel_sha256": "12b3765b7106f8f20c90e73d940e2c384b22c2b78af0f032c07bd10561be61e6",
+    "installed_modules_match_source": 11,
+    "license_attachments": "PASS",
+    "standalone_full_pipeline_profiles": [
+      "euphoria-alt-r2",
+      "maggot-r1"
+    ]
+  },
+  "publication_review": {
+    "secrets_and_personal_paths": "PASS",
+    "text_only": "PASS",
+    "game_assets_in_repository": 0,
+    "independent_review": "PASS"
+  },
+  "historical_device_evidence": {
+    "euphoria_r1": "User confirmed tested scenes resolved; full checklist not itemized",
+    "euphoria_r2": "NOT_TESTED",
+    "euphoria_alt_r2": "NOT_TESTED",
+    "maggot_r1": "User confirmed slots 1,2,6,7 directly and after exit/reopen; all routes/new-save flow not fully itemized"
+  },
+  "limits": [
+    "All new build validation is file-level; no new iOS execution performed",
+    "Original profiles used a clean source reconstructed from preserved, fingerprint-verified original bytes",
+    "ZIP hashes identify local validation outputs; timestamps/compression metadata can differ in future builds",
+    "Temporary game stages and validation ZIPs are not published"
+  ]
+}

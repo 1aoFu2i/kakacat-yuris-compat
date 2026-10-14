@@ -1,0 +1,24 @@
+MoleBox attribution for kakacat-yuris-compat
+
+The NewDES rotor, decipher schedule and MoleBox package layout are adapted
+from Alexey Sudachen's MoleBox source, distributed under GNU GPL version 3.
+
+Upstream repository: https://github.com/sudachen/Molebox
+Reviewed commit: f526e8a41bcb7884231154e8e5ccb74c789f188d
+Relevant upstream files:
+  MxbPack/stub/ndes.py
+  Include/stbinfo.h
+  Include/layout.h
+  Core/src/svfs.cpp
+
+The GPL license is reproduced in molebox-gpl-3.0.txt.
+The Python extraction implementation has been adapted for this project:
+the fixed rotor is embedded, vendor source-file existence checks have been
+removed, and supported input fingerprints and resource validation remain.
+No upstream executable code or xternal C source is loaded, compiled or run.
+Blowfish is provided by the separately installed cryptography package;
+CRC32 is provided by Python zlib. The resource block CRC16 implementation
+uses polynomial 0xA001 and initial value zero.
+
+All game and translation resource bytes must be supplied by the user locally.
+They are not part of this source distribution or its GPL license grant.

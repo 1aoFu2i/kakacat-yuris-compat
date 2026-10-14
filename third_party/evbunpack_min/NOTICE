@@ -1,0 +1,19 @@
+evbunpack_min
+
+This directory contains an adapted subset of evbunpack 0.2.6 by mos9527 and
+contributors, licensed under Apache License 2.0.
+
+Upstream repository: https://github.com/mos9527/evbunpack
+Source commit: ee7b647acf2a46617b0c448dfa83d63132ea917b
+Original files: evbunpack/__main__.py and evbunpack/const.py
+
+Changes made on 2026-10-14: only the modern external-tree structure reader is
+retained. PE restoration, decompression, command-line behavior, third-party
+dependencies and all file writes are removed. Explicit bounds, filename and
+node-count checks replace assertions and implicit EOF termination.
+
+Original source SHA256:
+__main__.py ac57e31046c9c462b156170c2859c073e50437c45dd1192a63bd12aa23fb124e
+const.py 3feb0db52c0c98d85d225427531c51f14c328c27c553cf975913886c452a26f3
+
+See licenses/evbunpack-Apache-2.0.txt for the full license.
